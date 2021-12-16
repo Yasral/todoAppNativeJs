@@ -1,7 +1,10 @@
-const API_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYzOTUwNTA3NiwiZXhwIjoxOTU1MDgxMDc2fQ.nugD6bl641l6KFBgo9SgmnpWuNJDR0K9rfH6ZHVAHgo"
+// const API_KEY =
+//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYzOTUwNTA3NiwiZXhwIjoxOTU1MDgxMDc2fQ.nugD6bl641l6KFBgo9SgmnpWuNJDR0K9rfH6ZHVAHgo"
 
-const API_URL = "https://mjfhxhlnaztdifgwfnjj.supabase.co/rest/v1/idees"
+// const API_URL = "https://mjfhxhlnaztdifgwfnjj.supabase.co/rest/v1/idees"
+
+const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYzOTU4NzcyNiwiZXhwIjoxOTU1MTYzNzI2fQ.c62nPMUiJGadorTPhGiyfJ0mjMI23-Xw1J0KkgHBOUY';
+const API_URL = 'https://ynoyhpayrnjgwfbuuhzi.supabase.co/rest/v1/MiniProject';
 
 // RECUPERATIONS DES ELEMENTS DOM
 const propositionElement = document.getElementById("propositions")
@@ -19,6 +22,15 @@ const creerUneCarte = (idee) => {
   divCard.classList.add("col-3")
   divCard.style.width = "22rem"
 
+  const btnAccepter = document.createElement("button");
+  const btnRefuser = document.createElement("button");
+
+  btnAccepter.textContent = "Accepter";
+  btnRefuser.textContent = "Refuser";
+
+  btnAccepter.setAttribute("class", "btn-success");
+  btnRefuser.setAttribute("class", "btn-danger");
+
   const divCardBody = document.createElement("div")
   divCardBody.classList.add("card-body")
 
@@ -28,13 +40,36 @@ const creerUneCarte = (idee) => {
   const cardDescription = document.createElement("p")
   cardDescription.classList.add("card-text")
 
-  cardTitle.textContent = idee.titre
-  cardDescription.textContent = idee.suggestion
+  cardTitle.textContent = idee.Titre
+  cardDescription.textContent = idee.Idea
+
+  
 
   divCardBody.appendChild(cardTitle)
   divCardBody.appendChild(cardDescription)
+
+  divCardBody.appendChild(btnAccepter)
+  divCardBody.appendChild(btnRefuser)
+
   divCard.appendChild(divCardBody)
   propositionElement.appendChild(divCard)
+
+  // Gestion des buttons
+
+  const btnSuccess = document.querySelectorAll(".btn-success");
+  const btnDanger = document.querySelectorAll(".btn-danger");
+
+  for (let i = 0; i < btnSuccess.length; i++) {
+    btnSuccess[i].addEventListener("click", (e) => {
+      e.target.parentElement.parentElement.style.border = "2px solid green";
+    })
+  }
+
+  for (let i = 0; i < btnDanger.length; i++) {
+    btnDanger[i].addEventListener("click", (e) => {
+      e.target.parentElement.parentElement.style.border = "2px solid #CE0033";
+    })
+  }
 }
 
 // VERIFICATION DES MOTS SAISIS
@@ -83,9 +118,9 @@ ideeForm.addEventListener("submit", (event) => {
 
   // mettre les informations sous forme
   const nouvelleIdee = {
-    titre: titreSaisi,
-    suggestion: suggestionSaisi,
-    statut: false,
+    Titre: titreSaisi,
+    Idea: suggestionSaisi,
+    Status: false,
   }
 
   //ENVOYER LES DONNEES VERS SUPABASE
@@ -123,3 +158,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
       })
     })
 })
+
+
+// Gestion des buttons
+
